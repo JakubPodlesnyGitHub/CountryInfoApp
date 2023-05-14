@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CountryInfoApp", "CountryInfoApp\CountryInfoApp.csproj", "{32D2D8BC-DE7D-48B2-843F-F7953E3A578F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{9F348C6A-FF6E-4746-8D39-AA4CBB54E9C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CountryInfoApp.Shared", "Shared\CountryInfoApp.Shared.csproj", "{9F348C6A-FF6E-4746-8D39-AA4CBB54E9C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
