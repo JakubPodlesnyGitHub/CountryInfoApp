@@ -1,6 +1,4 @@
-﻿using CountryInfoApp.Interfaces;
-using CountryInfoApp.Services;
-using MudBlazor.Services;
+﻿using MudBlazor.Services;
 
 namespace CountryInfoApp.ConifgurationServices
 {

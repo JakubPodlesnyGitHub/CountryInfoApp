@@ -35,11 +35,12 @@ namespace CountryInfoApp.Services
                             }
                         }
                     }
-                }".Replace("#continent",continentCode)
+                }".Replace("#continent", continentCode)
             };
             var response = await _client.SendQueryAsync<GraphQLContinentResponse>(request);
             return response.Data.Continent;
         }
+
         public async Task<List<ContinentDTO>> GetContinentsAsync()
         {
             var request = new GraphQLRequest

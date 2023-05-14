@@ -5,6 +5,7 @@ namespace CountryInfoApp.HttpHelpers
     public class HttpService : IHttpService
     {
         private readonly HttpClient _httpClient;
+
         private JsonSerializerOptions _serializerOptions => new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -14,6 +15,7 @@ namespace CountryInfoApp.HttpHelpers
         {
             _httpClient = httpClient;
         }
+
         public async Task<HttpWrapper<T>> GetAsync<T>(string URL)
         {
             var responseHttp = await _httpClient.GetAsync(URL);
@@ -26,6 +28,7 @@ namespace CountryInfoApp.HttpHelpers
             }
             return new HttpWrapper<T>(responseHttp.IsSuccessStatusCode, default, responseHttp);
         }
+
         private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse, JsonSerializerOptions options)
         {
             var responseString = await httpResponse.Content.ReadAsStringAsync();

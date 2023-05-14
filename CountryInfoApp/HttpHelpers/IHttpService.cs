@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace CountryInfoApp.HttpHelpers
+﻿namespace CountryInfoApp.HttpHelpers
 {
     public interface IHttpService
     {

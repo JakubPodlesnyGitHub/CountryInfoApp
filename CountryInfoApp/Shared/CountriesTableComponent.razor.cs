@@ -1,10 +1,6 @@
 ﻿using CountryInfoApp.REST.Interfaces;
 using CountryInfoApp.Shared.Dtos.Models;
-using CountryInfoApp.Shared.JsonWrappers;
 using Microsoft.AspNetCore.Components;
-using System.Linq;
-using static MudBlazor.Colors;
-
 
 namespace CountryInfoApp.Shared
 {
@@ -12,8 +8,10 @@ namespace CountryInfoApp.Shared
     {
         [Parameter]
         public string ContinentCode { get; set; } = null!;
+
         [Parameter]
         public int CountriesNumber { get; set; }
+
         [Inject]
         public ICountryRepository CountryRepository { get; set; }
 
@@ -21,6 +19,7 @@ namespace CountryInfoApp.Shared
 
         private string SearchValue = string.Empty;
         private bool IsLoading = true;
+
         protected override async Task OnParametersSetAsync()
         {
             Continent = await ContinentService.GetContinentAsync(ContinentCode);
