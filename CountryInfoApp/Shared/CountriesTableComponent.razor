@@ -1,0 +1,107 @@
+﻿@using CountryInfoApp.Shared.JsonWrappers;
+@if (Continent is not null)
+{
+    <MudTable T="CountryDTO"
+          Items="Continent.Countries"
+          Hover=true
+          Loading="IsLoading"
+          LoadingProgressColor="Color.Success"
+          Breakpoint="Breakpoint.Sm"
+          SortLabel="Sort By"
+          Filter="new Func<CountryDTO, bool>(FilterFuncShort)">
+        <ToolBarContent>
+            <MudText Typo="Typo.h4">Countries based on selected continent</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchValue"
+                      Placeholder="Search..."
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0" />
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>
+                <MudTableSortLabel SortBy="new Func<CountryDTO, string>(c => c.Name)">
+                    Name
+                </MudTableSortLabel>
+            </MudTh>
+            <MudTh>Code</MudTh>
+            <MudTh>Native</MudTh>
+            <MudTh>Emoji</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Code">@context.Code</MudTd>
+            <MudTd DataLabel="Native">@context.Native</MudTd>
+            <MudTd DataLabel="Emoji">@context.Emoji</MudTd>
+            <MudTd><MudSwitch T="bool" CheckedChanged="@(() => ShowBtnSwipe(context))" Color="Color.Success" /></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+        <NoRecordsContent>
+            <MudText Color="Color.Error" Typo="Typo.h3">
+                No countries to display
+            </MudText>
+        </NoRecordsContent>
+        <ChildRowContent>
+            @if (context.ShowCountryDetails)
+            {
+                <MudTr>
+                    <td colspan="5">
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                <MudTable T="CountryDetails"
+                                  Items="context.CountryDetails"
+                                  Hover=true
+                                  Context="DetailsContext" 
+                                  Elevation="0">
+                                    <HeaderContent>
+                                        <MudTh>Official Name</MudTh>
+                                        <MudTh>Capital</MudTh>
+                                        <MudTh>Population</MudTh>
+                                        <MudTh>Currency</MudTh>
+                                        <MudTh>Subregion</MudTh>
+                                        <MudTh>Languages</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        <MudTd DataLabel="Official Name"> @DetailsContext.Name.Official</MudTd>
+                                        <MudTd DataLabel="Capital">@DetailsContext.Capital[0]</MudTd>
+                                        <MudTd DataLabel="Population">@DetailsContext.Population</MudTd>
+                                        <MudTd DataLabel="Currency">
+                                            <MudList Clickable="false">
+                                                @foreach (CurrencySymbol currency in DetailsContext.Currencies.Values)
+                                                {
+                                                    <MudListItem Dense="true">
+                                                        @currency.Name
+                                                    </MudListItem>
+                                                }
+                                            </MudList>
+                                        </MudTd>
+                                            <MudTd DataLabel="Subregion">@DetailsContext.Subregion</MudTd>
+                                            <MudTd DataLabel="Languages">
+                                                <MudList Clickable="false">
+                                                    @foreach (LanguageDTO language in context.Languages)
+                                                {
+                                                    <MudListItem Dense="true">
+                                                        @language.Name
+                                                    </MudListItem>
+                                                }
+                                            </MudList>
+                                        </MudTd>
+                                    </RowTemplate>
+                                    <NoRecordsContent>
+                                        <MudText Color="Color.Error">
+                                            No Information Found!
+                                        </MudText>
+                                    </NoRecordsContent>
+                                </MudTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+        </ChildRowContent>
+    </MudTable>
+}

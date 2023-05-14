@@ -1,0 +1,32 @@
+﻿@page "/"
+<MudContainer Fixed=true>
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12">
+            <MudSelect T="ContinentDTO" @bind-Value="SelectedContinent" Label="Select Continent" Placeholder="Please Select..." AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined">
+                @foreach (ContinentDTO continent in Continents)
+                {
+                    <MudSelectItem Value="@continent">@continent.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12">
+            <MudNumericField T="Int32"
+                             Value="CountriesNumber"
+                             Min="2"
+                             Max="10"
+                             Label="Select Number Of Countries To Display..."
+                             Variant="Variant.Outlined"
+                             ValueChanged="@((v) => ValueChanged(v))" />
+        </MudItem>
+        @if (SelectedContinent is not null)
+        {
+            <MudItem xs="12">
+                <ContinentInformationComponent Name="@SelectedContinent.Name" />
+            </MudItem>
+            <MudItem xs="12">
+                <CountriesTableComponent CountriesNumber="CountriesNumber" ContinentCode="@SelectedContinent.Code" />
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>
+
