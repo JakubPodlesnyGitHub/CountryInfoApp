@@ -9,7 +9,6 @@ namespace CountryInfoApp.HttpHelpers
         {
             PropertyNameCaseInsensitive = true
         };
-        private string _mediaType = "application/json";
 
         public HttpService(HttpClient httpClient)
         {
@@ -18,10 +17,14 @@ namespace CountryInfoApp.HttpHelpers
         public async Task<HttpWrapper<T>> GetAsync<T>(string URL)
         {
             var responseHttp = await _httpClient.GetAsync(URL);
-            var response = await Deserialize<T>(
+            if (responseHttp.IsSuccessStatusCode)
+            {
+                var response = await Deserialize<T>(
                 httpResponse: responseHttp,
                 options: _serializerOptions);
-            return new HttpWrapper<T>(responseHttp.IsSuccessStatusCode, response, responseHttp);
+                return new HttpWrapper<T>(responseHttp.IsSuccessStatusCode, response, responseHttp);
+            }
+            return new HttpWrapper<T>(responseHttp.IsSuccessStatusCode, default, responseHttp);
         }
         private async Task<T> Deserialize<T>(HttpResponseMessage httpResponse, JsonSerializerOptions options)
         {
