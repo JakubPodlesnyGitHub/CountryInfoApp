@@ -16,8 +16,10 @@ namespace CountryInfoApp.Shared.Dtos.Models
         public string? Emoji { get; set; }
         public List<LanguageDTO>? Languages { get; set; }
         [JsonIgnore]
-        public List<CountryDetails>? CountryDetails { get; set; }
+        public List<CountryDetails>? CountryDetails { get; set; } = new List<CountryDetails>();
         [JsonIgnore]
         public bool ShowCountryDetails { get; set; } = false;
+        [JsonIgnore]
+        public bool IsDetailsLoading { get; set; } = true;
     }
 }

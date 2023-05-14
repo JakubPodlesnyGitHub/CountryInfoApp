@@ -62,6 +62,10 @@ namespace CountryInfoApp.Shared
         {
             selectedElement.ShowCountryDetails = !selectedElement.ShowCountryDetails;
             selectedElement.CountryDetails = await CountryRepository.GetCountryDetailsAsync(selectedElement.Name);
+            if (selectedElement.CountryDetails is not null && selectedElement.CountryDetails.Count > 0)
+            {
+                selectedElement.IsDetailsLoading = false;
+            }
             StateHasChanged();
         }
     }

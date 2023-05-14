@@ -55,8 +55,10 @@
                                 <MudTable T="CountryDetails"
                                   Items="context.CountryDetails"
                                   Hover=true
-                                  Context="DetailsContext" 
-                                  Elevation="0">
+                                  Context="DetailsContext"
+                                  Elevation="0"
+                                  Loading="context.IsDetailsLoading"
+                                  LoadingProgressColor="Color.Success">
                                     <HeaderContent>
                                         <MudTh>Official Name</MudTh>
                                         <MudTh>Capital</MudTh>
@@ -66,29 +68,43 @@
                                         <MudTh>Languages</MudTh>
                                     </HeaderContent>
                                     <RowTemplate>
-                                        <MudTd DataLabel="Official Name"> @DetailsContext.Name.Official</MudTd>
-                                        <MudTd DataLabel="Capital">@DetailsContext.Capital[0]</MudTd>
-                                        <MudTd DataLabel="Population">@DetailsContext.Population</MudTd>
-                                        <MudTd DataLabel="Currency">
-                                            <MudList Clickable="false">
-                                                @foreach (CurrencySymbol currency in DetailsContext.Currencies.Values)
-                                                {
-                                                    <MudListItem Dense="true">
-                                                        @currency.Name
-                                                    </MudListItem>
-                                                }
-                                            </MudList>
+                                        <MudTd DataLabel="Official Name"> @(DetailsContext.Name.Official is not null ? DetailsContext.Name.Official : "No information found!") </MudTd>
+                                        <MudTd DataLabel="Capital">@(DetailsContext.Capital[0] is not null ? DetailsContext.Capital[0] : "No information found!")</MudTd>
+                                            <MudTd DataLabel="Population">@(DetailsContext.Population is not null ? DetailsContext.Population : "No information found!")</MudTd>
+                                            <MudTd DataLabel="Currency">
+                                                @if (DetailsContext.Currencies is not null && DetailsContext.Currencies.Count > 0)
+                                            {
+                                                <MudList Clickable="false">
+                                                    @foreach (CurrencySymbol currency in DetailsContext.Currencies.Values)
+                                                    {
+                                                        <MudListItem Dense="true">
+                                                            @currency.Name
+                                                        </MudListItem>
+                                                    }
+                                                </MudList>
+                                            }
+                                            else
+                                            {
+                                                <MudText>No information found!</MudText>
+                                            }
                                         </MudTd>
-                                            <MudTd DataLabel="Subregion">@DetailsContext.Subregion</MudTd>
+                                        <MudTd DataLabel="Subregion">@(DetailsContext.Subregion is not null ? DetailsContext.Subregion : "No information found!")</MudTd>
                                             <MudTd DataLabel="Languages">
+                                                @if (context.Languages is not null && context.Languages.Count > 0)
+                                            {
                                                 <MudList Clickable="false">
                                                     @foreach (LanguageDTO language in context.Languages)
-                                                {
-                                                    <MudListItem Dense="true">
-                                                        @language.Name
-                                                    </MudListItem>
-                                                }
-                                            </MudList>
+                                                    {
+                                                        <MudListItem Dense="true">
+                                                            @language.Name
+                                                        </MudListItem>
+                                                    }
+                                                </MudList>
+                                            }
+                                            else
+                                            {
+                                                <MudText>No information found!</MudText>
+                                            }
                                         </MudTd>
                                     </RowTemplate>
                                     <NoRecordsContent>
